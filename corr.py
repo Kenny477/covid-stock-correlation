@@ -39,3 +39,18 @@ corr = together.corr()['COVID Cases'].drop('COVID Cases')
 with open('output.txt', 'w') as f:
     for row in corr.index:
         f.write(row + ': ' + str(corr[row]) + '\n')
+
+getTimeRange().plot()
+plt.savefig('covid-cases.png', format='png')
+plt.close()
+
+together.drop(['COVID Cases'], axis=1).plot()
+plt.savefig('benchmarks.png', format='png')
+plt.close()
+
+ax = (getTimeRange().diff().dropna().rename(
+    'Daily COVID Cases')/10).plot()
+together.drop(['COVID Cases'], axis=1).plot(ax=ax)
+plt.legend()
+plt.savefig('cases-vs-benchmarks.png', format='png')
+plt.close()
